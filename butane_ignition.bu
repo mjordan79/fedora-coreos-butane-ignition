@@ -1,0 +1,135 @@
+variant: fcos
+version: 1.5.0
+
+kernel_arguments:
+  should_exist:
+    - enforcing=0
+
+passwd:
+  users:
+    - name: core
+      should_exist: false
+    - name: mjordan
+      password_hash: $y$j9T$9Wj9ix4FkfCYk.9iPAZHD/$ZYUX3MDMslOCTG2wZjJv7q7E5fkJfLBS3BXVKMuUmXC 
+      home_dir: /home/mjordan
+      no_create_home: false
+      groups:
+        - wheel
+        - sudo
+        - docker
+      shell: /bin/bash
+  groups:
+    - name: core
+      should_exist: false
+
+systemd:
+  units:
+    - name: provision.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Initial System Setup
+        # We run after systemd-machine-id-commit.service to ensure that
+        # ConditionFirstBoot=true services won't rerun on the next boot.
+        After=systemd-machine-id-commit.service
+        After=network-online.target
+        # We run before zincati.service to avoid conflicting rpm-ostree
+        # transactions.
+        Before=zincati.service
+        ConditionPathExists=!/var/lib/%N.stamp
+
+        [Service]
+        Type=oneshot
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned
+        ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
+        ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system
+        ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport
+        ExecStart=/bin/touch /var/lib/%N.stamp
+        ExecStart=/bin/systemctl --no-block reboot
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: cockpit.socket
+      enabled: true
+    - name: cockpit.service
+      enabled: true
+
+storage:
+  files:
+    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
+      mode: 0644
+      contents:
+        inline: |
+          # Enable password authentication, which is disabled by default.
+          PasswordAuthentication yes
+    - path: /etc/vconsole.conf
+      mode: 0644
+      contents:
+        inline: KEYMAP=it
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: junkie.digitalnucleus.it
+    - path: /etc/ssh/sshd_config.d/10-custom.conf
+      contents:
+        inline: |
+          X11Forwarding no
+          GSSAPIAuthentication no
+    - path: /etc/tuned/active_profile
+      overwrite: true
+      contents:
+        inline: |
+          virtual-guest
+    - path: /etc/tuned/profile_mode
+      overwrite: true
+      contents:
+        inline: |
+          manual
+#   - path: /etc/NetworkManager/system-connections/ens192.nmconnection
+#     mode: 0600
+#     contents:
+#       inline: |
+#         [connection]
+#         id=ens192
+#         type=ethernet
+#         interface-name=ens192
+#         [ipv4]
+#         address1=192.168.220.150/24,192.168.220.1
+#         dns=8.8.8.8;
+#         dns-search=
+#         may-fail=false
+#         method=manual
+    - path: /etc/NetworkManager/system-connections/eth0.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=eth0
+          type=ethernet
+          interface-name=eth0
+          [ipv4]
+          address1=192.169.0.15/24,192.169.0.1
+          dns=8.8.8.8;
+          dns-search=
+          may-fail=false
+          method=manual
+    - path: /etc/zincati/config.d/55-updates-strategy.toml
+      contents:
+        inline: |
+          [updates]
+          strategy = "immediate"
+    - path: /home/mjordan/.bash_profile
+      overwrite: false
+      append:
+        - inline: |
+            neofetch --ascii_distro container_linux
+  links:
+    - path: /etc/localtime
+      target: ../usr/share/zoneinfo/Europe/Rome
+    - path: /etc/systemd/system/multi-user.target.wants/tuned.service
+      target: /usr/lib/systemd/system/tuned.service
+    - path: /etc/systemd/system/multi-user.target.wants/cockpit.socket
+      target: /usr/lib/systemd/system/cockpit.socket
+    
