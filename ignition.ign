@@ -28,12 +28,25 @@
         "homeDir": "/home/mjordan",
         "name": "mjordan",
         "noCreateHome": false,
-        "passwordHash": "$y$j9T$9Wj9ix4FkfCYk.9iPAZHD/$ZYUX3MDMslOCTG2wZjJv7q7E5fkJfLBS3BXVKMuUmXC",
+        "passwordHash": "$y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118",
         "shell": "/bin/bash"
       }
     ]
   },
   "storage": {
+    "disks": [
+      {
+        "device": "/dev/sda",
+        "partitions": [
+          {
+            "label": "root",
+            "number": 4,
+            "resize": true,
+            "sizeMiB": 0
+          }
+        ]
+      }
+    ],
     "files": [
       {
         "path": "/etc/ssh/sshd_config.d/20-enable-passwords.conf",
@@ -48,14 +61,6 @@
         "contents": {
           "compression": "",
           "source": "data:,KEYMAP%3Dit"
-        },
-        "mode": 420
-      },
-      {
-        "path": "/etc/hostname",
-        "contents": {
-          "compression": "",
-          "source": "data:,junkie.digitalnucleus.it"
         },
         "mode": 420
       },
@@ -91,6 +96,24 @@
         "mode": 384
       },
       {
+        "overwrite": false,
+        "path": "/etc/hosts",
+        "append": [
+          {
+            "compression": "gzip",
+            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzNFXITSwuSS0y1EvJTM8sSczJK03OSS0t1sss4UJSZgZVZoRfmTlUmTF+ZRYK5flF2QQttYQqw2YpIAAA//9p3DlZwwAAAA=="
+          }
+        ]
+      },
+      {
+        "path": "/etc/hostname",
+        "contents": {
+          "compression": "",
+          "source": "data:,master1.digitalnucleus.it"
+        },
+        "mode": 420
+      },
+      {
         "path": "/etc/zincati/config.d/55-updates-strategy.toml",
         "contents": {
           "compression": "",
@@ -106,6 +129,14 @@
             "source": "data:,neofetch%20--ascii_distro%20container_linux%0A"
           }
         ]
+      }
+    ],
+    "filesystems": [
+      {
+        "device": "/dev/mapper/root",
+        "format": "ext4",
+        "label": "root",
+        "wipeFilesystem": true
       }
     ],
     "links": [
@@ -126,7 +157,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Initial System Setup\n# We run after systemd-machine-id-commit.service to ensure that\n# ConditionFirstBoot=true services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before zincati.service to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config\nExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned\nExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac\nExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system\nExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Initial System Setup\n# We run after systemd-machine-id-commit.service to ensure that\n# ConditionFirstBoot=true services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before zincati.service to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config\nExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap\nExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac\nExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system\nExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "provision.service"
       },

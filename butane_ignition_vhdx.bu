@@ -1,3 +1,6 @@
+#######################################
+# Butane config file by Renato Perini #
+#######################################
 variant: fcos
 version: 1.5.0
 
@@ -10,7 +13,7 @@ passwd:
     - name: core
       should_exist: false
     - name: mjordan
-      password_hash: $y$j9T$9Wj9ix4FkfCYk.9iPAZHD/$ZYUX3MDMslOCTG2wZjJv7q7E5fkJfLBS3BXVKMuUmXC 
+      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118 
       home_dir: /home/mjordan
       no_create_home: false
       groups:
@@ -42,10 +45,10 @@ systemd:
         Type=oneshot
         RemainAfterExit=yes
         ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned
+        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap dhcpcd dhcpdump
         ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
         ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system
-        ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport
+        ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp
         ExecStart=/bin/touch /var/lib/%N.stamp
         ExecStart=/bin/systemctl --no-block reboot
 
@@ -68,10 +71,6 @@ storage:
       mode: 0644
       contents:
         inline: KEYMAP=it
-    - path: /etc/hostname
-      mode: 0644
-      contents:
-        inline: junkie.digitalnucleus.it
     - path: /etc/ssh/sshd_config.d/10-custom.conf
       contents:
         inline: |
@@ -115,6 +114,19 @@ storage:
           dns-search=
           may-fail=false
           method=manual
+    - path: /etc/hosts
+      overwrite: false
+      append:
+        - inline: |
+            192.169.0.15 master1.digitalnucleus.it
+            192.169.0.16 master2.digitalnucleus.it
+            192.169.0.17 master3.digitalnucleus.it
+            192.169.0.18 worker1.digitalnucleus.it
+            192.169.0.19 worker2.digitalnucleus.it
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: master1.digitalnucleus.it
     - path: /etc/zincati/config.d/55-updates-strategy.toml
       contents:
         inline: |
