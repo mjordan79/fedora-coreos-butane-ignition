@@ -34,19 +34,6 @@
     ]
   },
   "storage": {
-    "disks": [
-      {
-        "device": "/dev/sda",
-        "partitions": [
-          {
-            "label": "root",
-            "number": 4,
-            "resize": true,
-            "sizeMiB": 0
-          }
-        ]
-      }
-    ],
     "files": [
       {
         "path": "/etc/ssh/sshd_config.d/20-enable-passwords.conf",
@@ -90,8 +77,8 @@
       {
         "path": "/etc/NetworkManager/system-connections/eth0.nmconnection",
         "contents": {
-          "compression": "",
-          "source": "data:,%5Bconnection%5D%0Aid%3Deth0%0Atype%3Dethernet%0Ainterface-name%3Deth0%0A%5Bipv4%5D%0Aaddress1%3D192.169.0.15%2F24%2C192.169.0.1%0Adns%3D8.8.8.8%3B%0Adns-search%3D%0Amay-fail%3Dfalse%0Amethod%3Dmanual%0A"
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/0yK0aqDMBBE3/dbrrlG0lKRfIn4sCQjBswqybbg35e0L2VgmDmcORwiCJoOWShFD9160utEWygCpSSKsnJAJ5zxNeZ0vtxCHGNBrdbbcTD2Ppre2Nv/4P5+PkWp/mE+mVo746YGuwouYfOU+epWTrtfea+gDN2O6DPLk3d6BwAA///6YVmioQAAAA=="
         },
         "mode": 384
       },
@@ -131,14 +118,6 @@
         ]
       }
     ],
-    "filesystems": [
-      {
-        "device": "/dev/mapper/root",
-        "format": "ext4",
-        "label": "root",
-        "wipeFilesystem": true
-      }
-    ],
     "links": [
       {
         "path": "/etc/localtime",
@@ -157,7 +136,7 @@
   "systemd": {
     "units": [
       {
-        "contents": "[Unit]\nDescription=Initial System Setup\n# We run after systemd-machine-id-commit.service to ensure that\n# ConditionFirstBoot=true services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before zincati.service to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config\nExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap\nExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac\nExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system\nExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
+        "contents": "[Unit]\nDescription=Initial System Setup\n# We run after systemd-machine-id-commit.service to ensure that\n# ConditionFirstBoot=true services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before zincati.service to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config\nExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap\nExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac\nExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit\nExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
         "enabled": true,
         "name": "provision.service"
       },

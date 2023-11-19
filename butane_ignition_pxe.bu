@@ -47,7 +47,7 @@ systemd:
         ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap
         ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
-        ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system
+        ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit
         ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp
         ExecStart=/bin/touch /var/lib/%N.stamp
         ExecStart=/bin/systemctl --no-block reboot
@@ -60,19 +60,19 @@ systemd:
       enabled: true
 
 storage:
-  disks:
-    - device: /dev/sda
-      partitions:
-        - label: root
-          number: 4
-          # 0 means to use all available space
-          size_mib: 0
-          resize: true
-  filesystems:
-    - device: /dev/mapper/root
-      format: ext4
-      wipe_filesystem: true
-      label: root
+#  disks:
+#    - device: /dev/sda
+#      partitions:
+#        - label: root
+#          number: 4
+#          # 0 means to use all available space
+#          size_mib: 0
+#          resize: true
+#  filesystems:
+#    - device: /dev/mapper/root
+#      format: ext4
+#      wipe_filesystem: true
+#      label: root
   files:
     - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
       mode: 0644
@@ -123,7 +123,7 @@ storage:
           interface-name=eth0
           [ipv4]
           address1=192.169.0.15/24,192.169.0.1
-          dns=8.8.8.8;
+          dns=8.8.8.8;8.8.4.4;
           dns-search=
           may-fail=false
           method=manual
