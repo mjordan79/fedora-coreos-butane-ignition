@@ -60,19 +60,11 @@ systemd:
       enabled: true
 
 storage:
-#  disks:
-#    - device: /dev/sda
-#      partitions:
-#        - label: root
-#          number: 4
-#          # 0 means to use all available space
-#          size_mib: 0
-#          resize: true
-#  filesystems:
-#    - device: /dev/mapper/root
-#      format: ext4
-#      wipe_filesystem: true
-#      label: root
+  filesystems:
+    - device: /dev/disk/by-partlabel/root
+      wipe_filesystem: true
+      format: ext4
+      label: root
   files:
     - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
       mode: 0644

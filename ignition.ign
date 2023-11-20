@@ -118,6 +118,14 @@
         ]
       }
     ],
+    "filesystems": [
+      {
+        "device": "/dev/disk/by-partlabel/root",
+        "format": "ext4",
+        "label": "root",
+        "wipeFilesystem": true
+      }
+    ],
     "links": [
       {
         "path": "/etc/localtime",
