@@ -7,7 +7,9 @@ version: 1.0.0
 passwd:
   users:
     - name: mjordan
-      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118 
+      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKz31asYtKEf9LFdTgJUSMqh24MdTnjQ0dil6ZenIy5TsGgnnsXZ+tGXkL9wjFDyxM52ucQCrjuW+EAyAeKs/fzITeZxRqlUylWVKMbxvjdqsIsZF0ifKfCKSGFRtKLmXskxeREyt5TYSZih+yylKwg6DJaPh5X+hnNr9OPTyn5HVAhdTNo7x1IKV/MA+XXhFrYgs8WUPyQhSBy3j8t+oNtNP9DZ2EVOnc6WOaMgLiu18BS+VpktMdtQkh4vTq5PmB+HoofUEDUu9Tm4/F0xZgY4dZV4/IuCmhKOPOiGl+JuLh7ihPBrQ+CZPMMqgBHECJzHUuJhH4WalWHRtKnZ/tKhf4IMG5weZ1zh/gYgwSiXgOlsiVRLXrUXvvU5lGmPVT7uTOpI8P3maHf7a2prERdi1NZ7zyQDyWKw3XNuKhTk+kMmqACINzC8ni+ZKvL9jkhfLNTp4txKt1S3yUwz93yyFgK9hDEy/z7shIZpG/2BwJ9nhUHNKKx2/1pwGdq8TGz5+jj5pqPavOpj6RzP3JAoFV1gv+odVazA3NTqETxAXXvaPJOFGprvInDA5XwkhjgQfLi08dunzp04/Gissr3f0GPpiRkHtjkeNsH2OE2hFEQbLOk7SFsW6O/mnGbADD85GSxEJuoKvtyotmOki5IefE1zIWoevMe3UeL8igZQ== 
       home_dir: /home/mjordan
       no_create_home: false
       groups:
@@ -18,12 +20,6 @@ passwd:
 
 storage:
   files:
-    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
-      mode: 0644
-      contents:
-        inline: |
-          # Enable password authentication, which is disabled by default.
-          PasswordAuthentication yes
     - path: /etc/vconsole.conf
       mode: 0644
       contents:
@@ -33,20 +29,16 @@ storage:
         inline: |
           X11Forwarding no
           GSSAPIAuthentication no
-    - path: /etc/NetworkManager/system-connections/eth0.nmconnection
-      mode: 0600
+    - path: /etc/systemd/network/00-eth0.network
       contents:
         inline: |
-          [connection]
-          id=eth0
-          type=ethernet
-          interface-name=eth0
-          [ipv4]
-          address1=192.169.0.15/24,192.169.0.1
-          dns=8.8.8.8;8.8.4.4;
-          dns-search=
-          may-fail=false
-          method=manual
+          [Match]
+          Name=eth0
+
+          [Network]
+          DNS=8.8.8.8
+          Address=192.169.0.20/24
+          Gateway=192.169.0.1
     - path: /etc/hosts
       overwrite: false
       append:
