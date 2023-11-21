@@ -1,4 +1,4 @@
-UI menu.c32
+UI vesamenu.c32
 DEFAULT pxeboot
 TIMEOUT 20
 PROMPT 0

@@ -1,0 +1,68 @@
+#######################################
+# Butane config file by Renato Perini #
+#######################################
+variant: flatcar
+version: 1.0.0
+
+passwd:
+  users:
+    - name: mjordan
+      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118 
+      home_dir: /home/mjordan
+      no_create_home: false
+      groups:
+        - wheel
+        - sudo
+        - docker
+      shell: /bin/bash
+
+storage:
+  files:
+    - path: /etc/ssh/sshd_config.d/20-enable-passwords.conf
+      mode: 0644
+      contents:
+        inline: |
+          # Enable password authentication, which is disabled by default.
+          PasswordAuthentication yes
+    - path: /etc/vconsole.conf
+      mode: 0644
+      contents:
+        inline: KEYMAP=it
+    - path: /etc/ssh/sshd_config.d/10-custom.conf
+      contents:
+        inline: |
+          X11Forwarding no
+          GSSAPIAuthentication no
+    - path: /etc/NetworkManager/system-connections/eth0.nmconnection
+      mode: 0600
+      contents:
+        inline: |
+          [connection]
+          id=eth0
+          type=ethernet
+          interface-name=eth0
+          [ipv4]
+          address1=192.169.0.15/24,192.169.0.1
+          dns=8.8.8.8;8.8.4.4;
+          dns-search=
+          may-fail=false
+          method=manual
+    - path: /etc/hosts
+      overwrite: false
+      append:
+        - inline: |
+            192.169.0.15 master1.digitalnucleus.it
+            192.169.0.16 master2.digitalnucleus.it
+            192.169.0.17 master3.digitalnucleus.it
+            192.169.0.18 worker1.digitalnucleus.it
+            192.169.0.19 worker2.digitalnucleus.it
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        inline: master1.digitalnucleus.it
+
+  links:
+    - path: /etc/localtime
+      target: ../usr/share/zoneinfo/Europe/Rome
+
+    
