@@ -5,6 +5,6 @@ PROMPT 0
 LABEL pxeboot
     MENU LABEL Fedora CoreOS 38
     KERNEL fcos/fedora-coreos-38.20231027.3.2-live-kernel-x86_64
-    APPEND initrd=fcos/fedora-coreos-38.20231027.3.2-live-initramfs.x86_64.img,fcos/fedora-coreos-38.20231027.3.2-live-rootfs.x86_64.img coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://192.169.0.10/images/ignition.ign
+    APPEND initrd=fcos/fedora-coreos-38.20231027.3.2-live-initramfs.x86_64.img,fcos/fedora-coreos-38.20231027.3.2-live-rootfs.x86_64.img coreos.inst.install_dev=/dev/sda coreos.inst.ignition_url=http://192.169.0.10/ignition/ignition.ign
 IPAPPEND 2
 
