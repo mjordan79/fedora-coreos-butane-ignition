@@ -1,0 +1,161 @@
+{
+  "ignition": {
+    "version": "3.4.0"
+  },
+  "kernelArguments": {
+    "shouldExist": [
+      "enforcing=0"
+    ]
+  },
+  "passwd": {
+    "groups": [
+      {
+        "name": "core",
+        "shouldExist": false
+      }
+    ],
+    "users": [
+      {
+        "name": "core",
+        "shouldExist": false
+      },
+      {
+        "groups": [
+          "wheel",
+          "sudo",
+          "docker"
+        ],
+        "homeDir": "/home/mjordan",
+        "name": "mjordan",
+        "noCreateHome": false,
+        "passwordHash": "$y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118",
+        "shell": "/bin/bash"
+      }
+    ]
+  },
+  "storage": {
+    "files": [
+      {
+        "path": "/etc/ssh/sshd_config.d/20-enable-passwords.conf",
+        "contents": {
+          "compression": "",
+          "source": "data:,%23%20Enable%20password%20authentication%2C%20which%20is%20disabled%20by%20default.%0APasswordAuthentication%20yes%0A"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/etc/vconsole.conf",
+        "contents": {
+          "compression": "",
+          "source": "data:,KEYMAP%3Dit"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/etc/ssh/sshd_config.d/10-custom.conf",
+        "contents": {
+          "compression": "",
+          "source": "data:,X11Forwarding%20no%0AGSSAPIAuthentication%20no%0A"
+        }
+      },
+      {
+        "overwrite": true,
+        "path": "/etc/tuned/active_profile",
+        "contents": {
+          "compression": "",
+          "source": "data:,virtual-guest%0A"
+        }
+      },
+      {
+        "overwrite": true,
+        "path": "/etc/tuned/profile_mode",
+        "contents": {
+          "compression": "",
+          "source": "data:,manual%0A"
+        }
+      },
+      {
+        "path": "/etc/NetworkManager/system-connections/eth0.nmconnection",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/0yK0aqDMBBE3/dbrrlG0lKRfIn4sCQjBswqybbg35e0L2VgmDmcORwiCJoOWShFD9160utEWygCpSSKsnJAJ5zxNeZ0vtxCHGNBrdbbcTD2Ppre2Nv/4P5+PkWp/mE+mVo746YGuwouYfOU+epWTrtfea+gDN2O6DPLk3d6BwAA///6YVmioQAAAA=="
+        },
+        "mode": 384
+      },
+      {
+        "overwrite": false,
+        "path": "/etc/hosts",
+        "append": [
+          {
+            "compression": "gzip",
+            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzNFXITSwuSS0y1EvJTM8sSczJK03OSS0t1sss4UJSZgZVZoRfmTlUmTF+ZRYK5flF2QQttYQqw2YpIAAA//9p3DlZwwAAAA=="
+          }
+        ]
+      },
+      {
+        "path": "/etc/hostname",
+        "contents": {
+          "compression": "",
+          "source": "data:,master1.digitalnucleus.it"
+        },
+        "mode": 420
+      },
+      {
+        "path": "/etc/zincati/config.d/55-updates-strategy.toml",
+        "contents": {
+          "compression": "",
+          "source": "data:,%5Bupdates%5D%0Astrategy%20%3D%20%22immediate%22%0A"
+        }
+      },
+      {
+        "overwrite": false,
+        "path": "/home/mjordan/.bash_profile",
+        "append": [
+          {
+            "compression": "",
+            "source": "data:,neofetch%20--ascii_distro%20container_linux%0A"
+          }
+        ]
+      }
+    ],
+    "filesystems": [
+      {
+        "device": "/dev/disk/by-partlabel/root",
+        "format": "ext4",
+        "label": "root",
+        "wipeFilesystem": true
+      }
+    ],
+    "links": [
+      {
+        "path": "/etc/localtime",
+        "target": "../usr/share/zoneinfo/Europe/Rome"
+      },
+      {
+        "path": "/etc/systemd/system/multi-user.target.wants/tuned.service",
+        "target": "/usr/lib/systemd/system/tuned.service"
+      },
+      {
+        "path": "/etc/systemd/system/multi-user.target.wants/cockpit.socket",
+        "target": "/usr/lib/systemd/system/cockpit.socket"
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nDescription=Initial System Setup\n# We run after systemd-machine-id-commit.service to ensure that\n# ConditionFirstBoot=true services won't rerun on the next boot.\nAfter=systemd-machine-id-commit.service\nAfter=network-online.target\n# We run before zincati.service to avoid conflicting rpm-ostree\n# transactions.\nBefore=zincati.service\nConditionPathExists=!/var/lib/%N.stamp\n\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config\nExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap\nExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac\nExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit\nExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl --no-block reboot\n\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "provision.service"
+      },
+      {
+        "enabled": true,
+        "name": "cockpit.socket"
+      },
+      {
+        "enabled": true,
+        "name": "cockpit.service"
+      }
+    ]
+  }
+}
