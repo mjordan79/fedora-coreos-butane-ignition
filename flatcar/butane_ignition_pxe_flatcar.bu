@@ -2,7 +2,7 @@
 # Butane config file by Renato Perini #
 #######################################
 variant: flatcar
-version: 1.0.0
+version: 1.1.0
 
 passwd:
   users:
@@ -18,8 +18,41 @@ passwd:
         - docker
       shell: /bin/bash
 
+#systemd:
+#  units:
+#    - name: installer.service
+#      enabled: true
+#      contents: |
+#        [Unit]
+#        Requires=network-online.target
+#        After=network-online.target
+#        ConditionPathExists=!/var/lib/%N.stamp
+#        [Service]
+#        Type=oneshot
+#        TimeoutStartSec=600
+#        RemainAfterExit=yes
+#        ExecStart=/usr/bin/sh -c "flatcar-install -d /dev/sda -i /opt/ignition.json && udevadm settle"
+#        ExecStart=/bin/touch /var/lib/%N.stamp
+#        ExecStart=/bin/systemctl --no-block reboot
+#        [Install]
+#        WantedBy=multi-user.target
+
 storage:
+  disks:
+  - device: /dev/sda
+    wipe_table: true
+    partitions:
+    - label: root
+  filesystems:
+    - device: /dev/disk/by-partlabel/root
+      wipe_filesystem: true
+      format: ext4
+      label: root
   files:
+    - path: /opt/ignition.json
+      mode: 0644
+      contents:
+        source: http://192.169.0.10/ignition/ignition_flatcar.ign
     - path: /etc/vconsole.conf
       mode: 0644
       contents:

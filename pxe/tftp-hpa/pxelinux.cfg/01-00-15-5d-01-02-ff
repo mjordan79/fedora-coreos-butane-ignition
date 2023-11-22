@@ -1,0 +1,15 @@
+UI vesamenu.c32
+DEFAULT flatcar
+TIMEOUT 300
+PROMPT 0
+
+MENU RESOLUTION 1024 768
+MENU BACKGROUND boot.png
+
+LABEL flatcar
+    MENU LABEL Flatcar Container Linux 3602.2.1
+    KERNEL flatcar/flatcar_production_pxe.vmlinuz
+    INITRD flatcar/flatcar_production_pxe_image.cpio.gz 
+    APPEND flatcar.first_boot=1 ignition.config.url=http://192.169.0.10/ignition/ignition_flatcar.ign
+
+IPAPPEND 2
