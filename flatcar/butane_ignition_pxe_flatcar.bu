@@ -18,42 +18,46 @@ passwd:
         - docker
       shell: /bin/bash
 
-#systemd:
-#  units:
-#    - name: installer.service
-#      enabled: true
-#      contents: |
-#        [Unit]
-#        Requires=network-online.target
-#        After=network-online.target
-#        ConditionPathExists=!/var/lib/%N.stamp
-#        [Service]
-#        Type=oneshot
-#        TimeoutStartSec=600
-#        RemainAfterExit=yes
-#        ExecStart=/usr/bin/sh -c "flatcar-install -d /dev/sda -i /opt/ignition.json && udevadm settle"
-#        ExecStart=/bin/touch /var/lib/%N.stamp
-#        ExecStart=/bin/systemctl --no-block reboot
-#        [Install]
-#        WantedBy=multi-user.target
+systemd:
+  units:
+    - name: installer.service
+      enabled: true
+      contents: |
+        [Unit]
+        Requires=network-online.target
+        After=network-online.target
+        ConditionPathExists=!/var/lib/%N.stamp
+        [Service]
+        Type=oneshot
+        TimeoutStartSec=600
+        RemainAfterExit=yes
+        ExecStart=/opt/install.sh
+        ExecStart=/bin/touch /var/lib/%N.stamp
+        ExecStart=/bin/systemctl disable installer.service
+        ExecStart=/bin/systemctl --no-block reboot
+        [Install]
+        WantedBy=multi-user.target
 
 storage:
-#  disks:
-#    - device: /dev/sda
-#      wipe_table: true
-#      partitions:
-#        - label: ROOT
-#  filesystems:
-#    - path: /
-#      device: /dev/disk/by-partlabel/ROOT
-#      format: ext4
-#      wipe_filesystem: true
-#      label: ROOT
   files:
     - path: /opt/ignition.json
       mode: 0644
       contents:
         source: http://192.169.0.10/ignition/ignition_flatcar.ign
+    - path: /opt/install.sh
+      mode: 0777
+      contents:
+        inline: |
+          #!/bin/bash 
+          rht=$(lsblk | wc --lines) 
+          if [ $rht -eq 3 ]
+          then
+            echo Installing Flatcar Linux on disk... 
+            flatcar-install -d /dev/sda -i /opt/ignition.json
+          else
+            echo Disabling installer.service, no longer needed.
+            systemctl disable installer.service
+          fi 
     - path: /etc/vconsole.conf
       mode: 0644
       contents:

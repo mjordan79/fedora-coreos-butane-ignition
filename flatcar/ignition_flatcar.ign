@@ -31,6 +31,14 @@
         "mode": 420
       },
       {
+        "path": "/opt/install.sh",
+        "contents": {
+          "compression": "gzip",
+          "source": "data:;base64,H4sIAAAAAAAC/2SOsUpEMRBF+3zFFbdQMElhbSeC4B+IRV4y72XccaKZcVXw40VXK+t7D+ecnuSFNS/FOsLsfrU7E1tkj0+8VcQorGTnCLziHrvZHZFecImH4J00AFT7wK2aFxHWDTdSvJaJO9bXdwxFY9unlBCA9bhFPt4RG3KjQ7ZWEBl5PHvmTdl5aHq0oYHE6E9yzVaWH8cvTzMZzQNXuoAOyNCNJpSoUUsBsA9zeqou3w1lEfoPhpURvgIAAP//3r9eFQQBAAA="
+        },
+        "mode": 511
+      },
+      {
         "path": "/etc/vconsole.conf",
         "contents": {
           "compression": "",
@@ -75,6 +83,15 @@
       {
         "path": "/etc/localtime",
         "target": "../usr/share/zoneinfo/Europe/Rome"
+      }
+    ]
+  },
+  "systemd": {
+    "units": [
+      {
+        "contents": "[Unit]\nRequires=network-online.target\nAfter=network-online.target\nConditionPathExists=!/var/lib/%N.stamp\n[Service]\nType=oneshot\nTimeoutStartSec=600\nRemainAfterExit=yes\nExecStart=/opt/install.sh\nExecStart=/bin/touch /var/lib/%N.stamp\nExecStart=/bin/systemctl disable installer.service\nExecStart=/bin/systemctl --no-block reboot\n[Install]\nWantedBy=multi-user.target\n",
+        "enabled": true,
+        "name": "installer.service"
       }
     ]
   }
