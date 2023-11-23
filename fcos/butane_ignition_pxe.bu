@@ -45,8 +45,9 @@ systemd:
         Type=oneshot
         RemainAfterExit=yes
         ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
-        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap
+        ExecStart=/usr/bin/rpm-ostree override remove nfs-utils-coreos --install nfs-utils
         ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
+        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap
         ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit
         ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp
         ExecStart=/bin/touch /var/lib/%N.stamp
@@ -123,15 +124,15 @@ storage:
       overwrite: false
       append:
         - inline: |
-            192.169.0.15 master1.digitalnucleus.it
-            192.169.0.16 master2.digitalnucleus.it
-            192.169.0.17 master3.digitalnucleus.it
-            192.169.0.18 worker1.digitalnucleus.it
-            192.169.0.19 worker2.digitalnucleus.it
+            192.169.0.15 fcosmaster1.digitalnucleus.it
+            192.169.0.16 fcosmaster2.digitalnucleus.it
+            192.169.0.17 fcosmaster3.digitalnucleus.it
+            192.169.0.18 fcosworker1.digitalnucleus.it
+            192.169.0.19 fcosworker2.digitalnucleus.it
     - path: /etc/hostname
       mode: 0644
       contents:
-        inline: master1.digitalnucleus.it
+        inline: fcosmaster1.digitalnucleus.it
     - path: /etc/zincati/config.d/55-updates-strategy.toml
       contents:
         inline: |

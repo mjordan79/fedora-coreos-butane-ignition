@@ -66,7 +66,7 @@
         "append": [
           {
             "compression": "gzip",
-            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzNFXITSwuSS0y1EvJTM8sSczJK03OSS0t1sss4UJSZgZVZoRfmTlUmTF+ZRYK5flF2QQttYQqw2YpIAAA//9p3DlZwwAAAA=="
+            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzMlBIy0ksyU0sLkktMtRLyUzPLEnMyStNzkktLdbLLOFCUmqKpNQIr1JjZFON8SuFmFqeX5RNyAEmBkhKsTkAEAAA//+ktsbb1wAAAA=="
           }
         ]
       },
@@ -74,7 +74,7 @@
         "path": "/etc/hostname",
         "contents": {
           "compression": "",
-          "source": "data:,master1.digitalnucleus.it"
+          "source": "data:,flatmaster1.digitalnucleus.it"
         },
         "mode": 420
       }

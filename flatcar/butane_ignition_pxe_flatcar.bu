@@ -81,15 +81,15 @@ storage:
       overwrite: false
       append:
         - inline: |
-            192.169.0.15 master1.digitalnucleus.it
-            192.169.0.16 master2.digitalnucleus.it
-            192.169.0.17 master3.digitalnucleus.it
-            192.169.0.18 worker1.digitalnucleus.it
-            192.169.0.19 worker2.digitalnucleus.it
+            192.169.0.20 flatmaster1.digitalnucleus.it
+            192.169.0.25 flatmaster2.digitalnucleus.it
+            192.169.0.30 flatmaster3.digitalnucleus.it
+            192.169.0.35 flatworker1.digitalnucleus.it
+            192.169.0.40 flatworker2.digitalnucleus.it
     - path: /etc/hostname
       mode: 0644
       contents:
-        inline: master1.digitalnucleus.it
+        inline: flatmaster1.digitalnucleus.it
 
   links:
     - path: /etc/localtime
