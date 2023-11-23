@@ -1,6 +1,6 @@
 {
   "ignition": {
-    "version": "3.3.0"
+    "version": "3.4.0"
   },
   "passwd": {
     "users": [
@@ -22,17 +22,6 @@
     ]
   },
   "storage": {
-    "disks": [
-      {
-        "device": "/dev/sda",
-        "partitions": [
-          {
-            "label": "root"
-          }
-        ],
-        "wipeTable": true
-      }
-    ],
     "files": [
       {
         "path": "/opt/ignition.json",
@@ -80,14 +69,6 @@
           "source": "data:,master1.digitalnucleus.it"
         },
         "mode": 420
-      }
-    ],
-    "filesystems": [
-      {
-        "device": "/dev/disk/by-partlabel/root",
-        "format": "ext4",
-        "label": "root",
-        "wipeFilesystem": true
       }
     ],
     "links": [

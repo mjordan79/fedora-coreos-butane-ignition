@@ -38,16 +38,17 @@ passwd:
 #        WantedBy=multi-user.target
 
 storage:
-  disks:
-  - device: /dev/sda
-    wipe_table: true
-    partitions:
-    - label: root
-  filesystems:
-    - device: /dev/disk/by-partlabel/root
-      wipe_filesystem: true
-      format: ext4
-      label: root
+#  disks:
+#    - device: /dev/sda
+#      wipe_table: true
+#      partitions:
+#        - label: ROOT
+#  filesystems:
+#    - path: /
+#      device: /dev/disk/by-partlabel/ROOT
+#      format: ext4
+#      wipe_filesystem: true
+#      label: ROOT
   files:
     - path: /opt/ignition.json
       mode: 0644
