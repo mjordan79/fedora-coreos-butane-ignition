@@ -5,9 +5,6 @@ git clone git://git.ipxe.org/ipxe.git
 
 echo "Editing branding.h"
 sed -i 's/#define\ PRODUCT_NAME\ ""/#define\ PRODUCT_NAME\ "iPXE Custom Build\ project\ by\ mjordan79"/' ipxe/src/config/branding.h
-#sed -i 's/#define\ PRODUCT_SHORT_NAME\ "iPXE"/#define\ PRODUCT_SHORT_NAME\ "ipxe-latest"/' ipxe/src/config/branding.h
-#sed -i 's/#define\ PRODUCT_URI\ "http:\/\/ipxe.org"/#define\ PRODUCT_URI\ "https:\/\/paypal.me\/sebaxakerhtc"/' ipxe/src/config/branding.h
-#sed -i 's/#define\ PRODUCT_TAG_LINE\ "Open\ Source\ Network\ Boot\ Firmware"/#define\ PRODUCT_TAG_LINE\ "by\ mjordan79"/' ipxe/src/config/branding.h
 
 echo "Editing general.h"
 sed -i 's/#undef\tDOWNLOAD_PROTO_HTTPS/#define\ DOWNLOAD_PROTO_HTTPS/' ipxe/src/config/general.h
@@ -31,6 +28,7 @@ echo "Editing console.h"
 sed -i 's/\/\/#undef\tCONSOLE_PCBIOS/#define\ CONSOLE_PCBIOS/' ipxe/src/config/console.h
 sed -i 's/\/\/#define\tCONSOLE_FRAMEBUFFER/#define\ CONSOLE_FRAMEBUFFER/' ipxe/src/config/console.h
 sed -i 's/\/\/#define\tCONSOLE_DIRECT_VGA/#define\ CONSOLE_DIRECT_VGA/' ipxe/src/config/console.h
+sed -i 's/#define\tKEYBOARD_MAP\tus/#define\tKEYBOARD_MAP\tit/' ipxe/src/config/console.h 
 
 echo "Building iPXE ..."
 sleep 3
