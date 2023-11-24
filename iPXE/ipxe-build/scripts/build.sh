@@ -4,10 +4,10 @@ rm -fr ipxe
 git clone git://git.ipxe.org/ipxe.git
 
 echo "Editing branding.h"
-sed -i 's/#define\ PRODUCT_NAME\ ""/#define\ PRODUCT_NAME\ "iPXE-Simple\ project\ by\ sebaxakerhtc"/' ipxe/src/config/branding.h
-sed -i 's/#define\ PRODUCT_SHORT_NAME\ "iPXE"/#define\ PRODUCT_SHORT_NAME\ "ipxe-latest"/' ipxe/src/config/branding.h
-sed -i 's/#define\ PRODUCT_URI\ "http:\/\/ipxe.org"/#define\ PRODUCT_URI\ "https:\/\/paypal.me\/sebaxakerhtc"/' ipxe/src/config/branding.h
-sed -i 's/#define\ PRODUCT_TAG_LINE\ "Open\ Source\ Network\ Boot\ Firmware"/#define\ PRODUCT_TAG_LINE\ "by\ sebaxakerhtc"/' ipxe/src/config/branding.h
+sed -i 's/#define\ PRODUCT_NAME\ ""/#define\ PRODUCT_NAME\ "iPXE Custom Build\ project\ by\ mjordan79"/' ipxe/src/config/branding.h
+#sed -i 's/#define\ PRODUCT_SHORT_NAME\ "iPXE"/#define\ PRODUCT_SHORT_NAME\ "ipxe-latest"/' ipxe/src/config/branding.h
+#sed -i 's/#define\ PRODUCT_URI\ "http:\/\/ipxe.org"/#define\ PRODUCT_URI\ "https:\/\/paypal.me\/sebaxakerhtc"/' ipxe/src/config/branding.h
+#sed -i 's/#define\ PRODUCT_TAG_LINE\ "Open\ Source\ Network\ Boot\ Firmware"/#define\ PRODUCT_TAG_LINE\ "by\ mjordan79"/' ipxe/src/config/branding.h
 
 echo "Editing general.h"
 sed -i 's/#undef\tDOWNLOAD_PROTO_HTTPS/#define\ DOWNLOAD_PROTO_HTTPS/' ipxe/src/config/general.h
