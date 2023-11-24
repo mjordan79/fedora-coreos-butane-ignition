@@ -82,10 +82,10 @@ storage:
       append:
         - inline: |
             192.169.0.20 flatmaster1.digitalnucleus.it
-            192.169.0.25 flatmaster2.digitalnucleus.it
-            192.169.0.30 flatmaster3.digitalnucleus.it
-            192.169.0.35 flatworker1.digitalnucleus.it
-            192.169.0.40 flatworker2.digitalnucleus.it
+            192.169.0.21 flatmaster2.digitalnucleus.it
+            192.169.0.22 flatmaster3.digitalnucleus.it
+            192.169.0.23 flatworker1.digitalnucleus.it
+            192.169.0.24 flatworker2.digitalnucleus.it
     - path: /etc/hostname
       mode: 0644
       contents:
