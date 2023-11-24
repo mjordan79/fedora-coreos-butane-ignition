@@ -55,7 +55,7 @@ echo Trying again... && goto nextstep
 
 :start-menu
 #console --picture https://github.com/BuckyMaler/global/raw/master/assets/img/about-visual.png ||
-console --picture https://raw.githubusercontent.com/mjordan79/fedora-coreos-butane-ignition/main/iPXE/ipxe-build/scripts/hyperv.png ||
+console --picture https://raw.githubusercontent.com/mjordan79/fedora-coreos-butane-ignition/main/iPXE/ipxe-build/scripts/renhat_ai.png ||
 set cls:hex 1b:5b:4a
 set cls ${cls:string}
 set space:hex 20:20
