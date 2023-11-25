@@ -1,0 +1,9 @@
+#!ipxe
+
+set HTTPURL http://192.169.0.10
+set CONFIGURL ${HTTPURL}/ignition/ignition_flatcar.ign
+
+kernel ${HTTPURL}/flatcar/flatcar_production_pxe.vmlinuz flatcar.first_boot=1 ignition.config.url=${CONFIGURL}
+initrd ${HTTPURL}/flatcar/flatcar_production_pxe_image.cpio.gz 
+
+boot
