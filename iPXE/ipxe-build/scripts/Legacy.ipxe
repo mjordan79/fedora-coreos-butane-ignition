@@ -73,12 +73,15 @@ set sp:hex 20
 set sp ${sp:string}
 
 menu Welcome to the Legacy BIOS Boot Menu. Booted in [ ${arch} ] mode because CPU arch is detected as [ ${archl} ]
-item --gap --            ---------------------------------------- Just a simple menu: -----------------------------------------
+item --gap --            ----------------------------------------- Operating Systems ------------------------------------------
+    item fcos            ${space} Fedora CoreOS
+	item fcar            ${space} Flatcar Linux
+item --gap --            ----------------------------------------- Boot Alternatives ------------------------------------------
 	item xyz             ${space} netboot.xyz
 	item cz              ${space} netboot.cz
 	item salstar         ${space} boot.salstar.sk
 	item localboot	     ${space} Boot from local storage
-item --gap --            --------------------------------------------- iPXE Tools: --------------------------------------------
+item --gap --            --------------------------------------------- iPXE Tools ---------------------------------------------
 	item view            ${space} Network setting
 	item config          ${space} Configure iPXE
 	item shell           ${space} iPXE shell
@@ -89,6 +92,12 @@ isset ${target} && set timeout 0 || set timeout 20000
 choose --timeout ${timeout} --default ${target} target && goto ${target} || goto failed
 echo ${cls}
 goto start-menu
+
+:fcos
+chain http://192.169.0.10/fedora/fcos.ipxe
+
+:fcar
+chain http://192.169.0.10/flatcar/fcar.ipxe
 
 :xyz
 chain --autofree https://boot.netboot.xyz/ipxe/netboot.xyz.lkrn || goto failed
