@@ -28,7 +28,7 @@ echo "Editing console.h"
 sed -i 's/\/\/#undef\tCONSOLE_PCBIOS/#define\ CONSOLE_PCBIOS/' ipxe/src/config/console.h
 sed -i 's/\/\/#define\tCONSOLE_FRAMEBUFFER/#define\ CONSOLE_FRAMEBUFFER/' ipxe/src/config/console.h
 sed -i 's/\/\/#define\tCONSOLE_DIRECT_VGA/#define\ CONSOLE_DIRECT_VGA/' ipxe/src/config/console.h
-sed -i 's/#define\tKEYBOARD_MAP\tus/#define\tKEYBOARD_MAP\tit/' ipxe/src/config/console.h 
+sed -i 's/#define\tKEYBOARD_MAP\tus/#define\tKEYBOARD_MAP\tdynamic/' ipxe/src/config/console.h 
 
 echo "Building iPXE ..."
 sleep 3
