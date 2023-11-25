@@ -76,7 +76,7 @@ menu Welcome to the EFI Boot Menu. Booted in [ ${arch} ] mode because CPU arch i
 item --gap --            ----------------------------------------- Operating Systems ------------------------------------------
     item fcos            ${space} Fedora CoreOS
 	item fcar            ${space} Flatcar Linux
-item --gap --            ---------------------------------------- Just a simple menu ------------------------------------------
+item --gap --            ----------------------------------------- Boot Alternatives ------------------------------------------
 	item xyz             ${space} netboot.xyz
 	item localboot	     ${space} Boot from local storage
 item --gap --            --------------------------------------------- iPXE Tools ---------------------------------------------
