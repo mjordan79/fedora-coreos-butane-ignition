@@ -13,7 +13,9 @@ passwd:
     - name: core
       should_exist: false
     - name: mjordan
-      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118 
+      password_hash: $y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118
+      ssh_authorized_keys:
+        - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKz31asYtKEf9LFdTgJUSMqh24MdTnjQ0dil6ZenIy5TsGgnnsXZ+tGXkL9wjFDyxM52ucQCrjuW+EAyAeKs/fzITeZxRqlUylWVKMbxvjdqsIsZF0ifKfCKSGFRtKLmXskxeREyt5TYSZih+yylKwg6DJaPh5X+hnNr9OPTyn5HVAhdTNo7x1IKV/MA+XXhFrYgs8WUPyQhSBy3j8t+oNtNP9DZ2EVOnc6WOaMgLiu18BS+VpktMdtQkh4vTq5PmB+HoofUEDUu9Tm4/F0xZgY4dZV4/IuCmhKOPOiGl+JuLh7ihPBrQ+CZPMMqgBHECJzHUuJhH4WalWHRtKnZ/tKhf4IMG5weZ1zh/gYgwSiXgOlsiVRLXrUXvvU5lGmPVT7uTOpI8P3maHf7a2prERdi1NZ7zyQDyWKw3XNuKhTk+kMmqACINzC8ni+ZKvL9jkhfLNTp4txKt1S3yUwz93yyFgK9hDEy/z7shIZpG/2BwJ9nhUHNKKx2/1pwGdq8TGz5+jj5pqPavOpj6RzP3JAoFV1gv+odVazA3NTqETxAXXvaPJOFGprvInDA5XwkhjgQfLi08dunzp04/Gissr3f0GPpiRkHtjkeNsH2OE2hFEQbLOk7SFsW6O/mnGbADD85GSxEJuoKvtyotmOki5IefE1zIWoevMe3UeL8igZQ==
       home_dir: /home/mjordan
       no_create_home: false
       groups:
@@ -44,12 +46,10 @@ systemd:
         [Service]
         Type=oneshot
         RemainAfterExit=yes
-        ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+        #ExecStart=/usr/bin/sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         ExecStart=/usr/bin/rpm-ostree override remove nfs-utils-coreos --install nfs-utils
-        ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
-        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap
-        ExecStart=/usr/bin/rpm-ostree install cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit
-        ExecStart=/usr/bin/rpm-ostree install cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp
+        #ExecStart=/usr/bin/rpm-ostree override remove cifs-utils samba-common-libs samba-client-libs libsmbclient libwbclient samba-common sssd-krb5-common sssd-ipa sssd-nfs-idmap sssd-ldap sssd-client sssd-ad sssd-common sssd-krb5 sssd-common-pac
+        ExecStart=/usr/bin/rpm-ostree install docker-compose vim tmux btop neofetch unzip tuned nmap cockpit cockpit-ostree cockpit-podman cockpit-selinux cockpit-storaged cockpit-system cockpit-packagekit cockpit-file-sharing cockpit-navigator cockpit-networkmanager cockpit-sosreport cockpit-pcp osbuild-composer composer-cli cockpit-composer
         ExecStart=/bin/touch /var/lib/%N.stamp
         ExecStart=/bin/systemctl --no-block reboot
 
