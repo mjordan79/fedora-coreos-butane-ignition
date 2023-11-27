@@ -15,7 +15,7 @@
         "noCreateHome": false,
         "passwordHash": "$y$j9T$8leCHKjDXk5Ne2.SraPgN.$HbST8G0cp1a9EVQIAgWodJ07zG/4IpUPtAMpJcdO118",
         "sshAuthorizedKeys": [
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKz31asYtKEf9LFdTgJUSMqh24MdTnjQ0dil6ZenIy5TsGgnnsXZ+tGXkL9wjFDyxM52ucQCrjuW+EAyAeKs/fzITeZxRqlUylWVKMbxvjdqsIsZF0ifKfCKSGFRtKLmXskxeREyt5TYSZih+yylKwg6DJaPh5X+hnNr9OPTyn5HVAhdTNo7x1IKV/MA+XXhFrYgs8WUPyQhSBy3j8t+oNtNP9DZ2EVOnc6WOaMgLiu18BS+VpktMdtQkh4vTq5PmB+HoofUEDUu9Tm4/F0xZgY4dZV4/IuCmhKOPOiGl+JuLh7ihPBrQ+CZPMMqgBHECJzHUuJhH4WalWHRtKnZ/tKhf4IMG5weZ1zh/gYgwSiXgOlsiVRLXrUXvvU5lGmPVT7uTOpI8P3maHf7a2prERdi1NZ7zyQDyWKw3XNuKhTk+kMmqACINzC8ni+ZKvL9jkhfLNTp4txKt1S3yUwz93yyFgK9hDEy/z7shIZpG/2BwJ9nhUHNKKx2/1pwGdq8TGz5+jj5pqPavOpj6RzP3JAoFV1gv+odVazA3NTqETxAXXvaPJOFGprvInDA5XwkhjgQfLi08dunzp04/Gissr3f0GPpiRkHtjkeNsH2OE2hFEQbLOk7SFsW6O/mnGbADD85GSxEJuoKvtyotmOki5IefE1zIWoevMe3UeL8igZQ=="
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDoeY8qlfz9kW84ZwkMwQqFTfhDDc5zkBWuFZ7Q9m9TAac01ImqhNIF05Q4vxQcfp9z9fBjtqTQjTe8joXfE5o+LTT8jPkNcMF9857oH0IAlWx1wDq9cuAiXsrFW7zRw59FTURAXw6CDih0ykfB4K4zFuLq2PHqT9i0Ra+PKPKL0jjzaZMHyQmobXjML5s/2b2tfEs+4HOdxe3YNzdl0ExmdyIedTvDo/t1ObKwFw8bVd8g+9MOgeAA3RRIG6yrvb7Q9eLOCUtbQC+iei7n3CFdY6P9n0H/zckIyEmX21igZJeqj4khjN7+OfQJ1+xVG+HB7chYw4J/y34s4y9lo9UO2cGWmFxvmUlO1wjJmLAfwJCoDOJe2WUwnBNBS8/YvACCHexiMQm7/ENeCgY7NchAMFlnxs8Dq7bh2qavDdftXvyR4xCfO1XVD+sTi8DKMp4qiYc/iU+iRLM1KHwXJuOreVlAP6kxLkvyX2n2ahT+DWUrOviBfHE9dGqQ/etVhX1jSwjcBzAOaNNNvpnBa7lZack3jZocnk2Z4gFTHYwJnD9SQjiXbhdoSjuL7JB7KV1+R1hnwBFtzrK/vV+KnlHDN+AJzXtg98EVei/ozVK+vuG4H6+GE9WNbDZhXeRpwPPrRQLkF9HdC6dGXZa/dxhpgOcQ6jxeh1HggglS1FcI6w=="
         ],
         "shell": "/bin/bash"
       }
@@ -66,7 +66,7 @@
         "append": [
           {
             "compression": "gzip",
-            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzMlBIy0ksyU0sLkktMtRLyUzPLEnMyStNzkktLdbLLOFCUmqKpNQIr1JjZFON8SuFmFqeX5RNyAEmBkhKsTkAEAAA//+ktsbb1wAAAA=="
+            "source": "data:;base64,H4sIAAAAAAAC/zK0NNIzNLPUM9AzMlBIy0ksyU0sLkktMtRLyUzPLEnMyStNzkktLdbLLOFCUmqIpNQIv1IjJKXG+JUag5WW5xdlE3SACZJSbA4ABAAA//+0GS4W1wAAAA=="
           }
         ]
       },
