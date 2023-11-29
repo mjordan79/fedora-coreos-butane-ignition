@@ -76,6 +76,7 @@ menu Welcome to the EFI Boot Menu. Booted in [ ${arch} ] mode because CPU arch i
 item --gap --            ----------------------------------------- Operating Systems ------------------------------------------
     item fcos            ${space} Fedora CoreOS
 	item fcar            ${space} Flatcar Linux
+	item matchbox        ${space} Matchbox
 item --gap --            ----------------------------------------- Boot Alternatives ------------------------------------------
 	item xyz             ${space} netboot.xyz
 	item localboot	     ${space} Boot from local storage
@@ -96,6 +97,9 @@ chain http://192.169.0.10/fedora/fcos.ipxe
 
 :fcar
 chain http://192.169.0.10/flatcar/fcar.ipxe
+
+:matchbox
+chain http://192.169.0.10:8080/boot.ipxe
 
 :xyz
 chain --autofree https://boot.netboot.xyz/ipxe/netboot.xyz.efi || goto failed
