@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# USAGE: ./scripts/get-fedora-coreos
+# USAGE: ./scripts/get-fedora-coreos stream version dest
+#
+set -eou pipefail
+
+STREAM=${1:-"stable"}
+VERSION=${2:-"36.20220906.3.2"}
+DEST_DIR=${3:-"$PWD/examples/assets"}
+DEST=$DEST_DIR/fedora-coreos
+BASE_URL=https://builds.coreos.fedoraproject.org/prod/streams/$STREAM/builds/$VERSION/x86_64
+
+# check stream/version exist based on the header response
+if ! curl -s -I $BASE_URL/fedora-coreos-$VERSION-metal.x86_64.raw.xz | grep -q -E '^HTTP/[0-9.]+ [23][0-9][0-9]' ; then
+  echo "Stream or Version not found"
+  exit 1
+fi
+
+if [ ! -d "$DEST" ]; then
+  echo "Creating directory $DEST"
+  mkdir -p $DEST
+fi
+
+echo "Downloading Fedora CoreOS $STREAM $VERSION images to $DEST"
+
+# PXE kernel
+echo "fedora-coreos-$VERSION-live-kernel-x86_64"
+curl -# $BASE_URL/fedora-coreos-$VERSION-live-kernel-x86_64 -o $DEST/fedora-coreos-$VERSION-live-kernel-x86_64
+
+# PXE initrd
+echo "fedora-coreos-$VERSION-live-initramfs.x86_64.img"
+curl -# $BASE_URL/fedora-coreos-$VERSION-live-initramfs.x86_64.img -o $DEST/fedora-coreos-$VERSION-live-initramfs.x86_64.img
+
+# rootfs
+echo "fedora-coreos-$VERSION-live-rootfs.x86_64.img"
+curl -# $BASE_URL/fedora-coreos-$VERSION-live-rootfs.x86_64.img -o $DEST/fedora-coreos-$VERSION-live-rootfs.x86_64.img
